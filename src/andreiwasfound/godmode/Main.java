@@ -91,7 +91,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     public void updateChecker() {
-        new UpdateChecker(this, 80958).getLatestVersion(version -> {
+        new UpdateChecker(this, 81882).getLatestVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
                 printToConsole("DiamondBrokeMessage is up to date!");
             } else {

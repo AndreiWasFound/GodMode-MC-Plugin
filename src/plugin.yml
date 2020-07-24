@@ -2,7 +2,7 @@ main: andreiwasfound.godmode.Main
 name: GodMode
 author: AndreiWasFound
 version: 1.0
-website:
+website: https://www.spigotmc.org/resources/godmode.81882/
 
 commands:
   god:
