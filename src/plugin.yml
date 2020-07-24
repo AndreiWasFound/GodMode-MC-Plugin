@@ -1,0 +1,8 @@
+main: andreiwasfound.godmode.Main
+name: GodMode
+author: AndreiWasFound
+version: 1.0
+website:
+
+commands:
+  god:
