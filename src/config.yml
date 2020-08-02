@@ -1,0 +1,6 @@
+# Replace the text below with your own message
+god-msg:
+  - "&a&lYou are now in God mode!"
+
+ungod-msg:
+  - "&c&lYou are no longer in God mode!"

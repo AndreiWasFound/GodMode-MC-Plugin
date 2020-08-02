@@ -1,5 +1,6 @@
-package andreiwasfound.godmode;
+package andreiwasfound.godmode.utilities;
 
+import andreiwasfound.godmode.Main;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;

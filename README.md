@@ -1,2 +1,2 @@
 # GodMode-MC-Plugin
-Usage /god
+Usage: /god

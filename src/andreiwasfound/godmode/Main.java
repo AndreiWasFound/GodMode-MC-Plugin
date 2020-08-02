@@ -1,13 +1,13 @@
 package andreiwasfound.godmode;
 
+import andreiwasfound.godmode.Commands.GodModeCommand;
+import andreiwasfound.godmode.Commands.ReloadConfig;
+import andreiwasfound.godmode.utilities.CommandTabCompleter;
+import andreiwasfound.godmode.utilities.MetricsLite;
+import andreiwasfound.godmode.utilities.UpdateChecker;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,19 +17,26 @@ import java.util.List;
 
 public class Main extends JavaPlugin implements Listener {
 
-    public static List<String> list = new ArrayList<String>();
+    private List<Player> GodPlayers = new ArrayList<Player>();
 
     @Override
     public void onEnable() {
         printToConsole("UpdateChecker is trying to register");
         updateChecker();
         printToConsole("UpdateChecker has been registered successfully");
+        printToConsole("Commands are trying to register");
+        registerCommands();
+        printToConsole("Commands have been registered successfully");
         printToConsole("Events are trying to register");
         registerEvents();
         printToConsole("Events have been registered successfully");
-
+        printToConsole("Config.yml is trying to register");
+        saveDefaultConfig();
+        printToConsole("Config.yml has been registered successfully");
+        printToConsole("bStats is trying to register");
         int pluginId = 8295;
         MetricsLite metrics = new MetricsLite(this, pluginId);
+        printToConsole("bStats has been registered successfully");
     }
 
     @Override
@@ -37,53 +44,34 @@ public class Main extends JavaPlugin implements Listener {
 
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (label.equalsIgnoreCase("god")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("Console cannot use this command");
-                return true;
-            }
-            Player player = (Player) sender;
-            if (sender instanceof Player) {
-                if (player.hasPermission("godmode.use")) {
-                    if (list.contains(player.getUniqueId().toString())) {
-                        list.remove(player.getUniqueId().toString());
-                        player.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "You are no longer in God mode!");
-                    } else {
-                        list.add(player.getUniqueId().toString());
-                        player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "You are now in God mode!");
-                    }
-                }
-                else {
-                    player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "You don't have permission to use this command!");
-
-                }
-            }
-        }
-        return false;
+    public void addGodPlayer(Player player) {
+        GodPlayers.add(player);
     }
 
-    @EventHandler
-    public void onDamage(EntityDamageEvent event){
-        if(event.getEntity() instanceof Player) {
-            if (Main.list.contains(event.getEntity().getUniqueId().toString())) {
-                event.setCancelled(true);
-            }
-        }
+    public void removeGodPlayer(Player player) {
+        GodPlayers.remove(player);
     }
 
-    @EventHandler
-    public void onHunger(FoodLevelChangeEvent event) {
-        if(event.getEntity() instanceof Player) {
-            if (Main.list.contains(event.getEntity().getUniqueId().toString())) {
-                event.setCancelled(true);
-            }
-        }
+    public List<Player> getGodPlayers() {
+        return GodPlayers;
+    }
+
+    public boolean hasGodPlayers() {
+        if (GodPlayers.isEmpty())
+            return false;
+        return true;
+    }
+
+    public void registerCommands() {
+        getCommand("god").setExecutor(new GodModeCommand(this));
+        getCommand("godmode").setExecutor(new ReloadConfig(this));
+        getCommand("godmode").setTabCompleter(new CommandTabCompleter());
     }
 
     private void registerEvents() {
         PluginManager pm = this.getServer().getPluginManager();
-        pm.registerEvents(this, this);
+        pm.registerEvents(new Events(this), this);
+        pm.registerEvents(new JoinUpdateMessage(this), this);
     }
 
     public void printToConsole(String msg) {
@@ -95,14 +83,14 @@ public class Main extends JavaPlugin implements Listener {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
                 printToConsole("GodMode is up to date!");
             } else {
-                printToConsole("GodMode is outdated!");
-                printToConsole("Newest version: " + version);
-                printToConsole("Your version: " + configVersion);
-                printToConsole("Please Update Here: " + configWebsite);
+                printToConsole("GodMode is " + ChatColor.RED + "outdated!");
+                printToConsole("Newest version: " + ChatColor.GOLD + version);
+                printToConsole("Your version: " + ChatColor.RED + pluginymlVersion);
+                printToConsole("Please Update Here: " + ChatColor.RED + pluginymlWebsite);
             }
         });
     }
-    PluginDescriptionFile config = this.getDescription();
-    String configVersion = config.getVersion();
-    String configWebsite = config.getWebsite();
+    PluginDescriptionFile pluginyml = this.getDescription();
+    String pluginymlVersion = pluginyml.getVersion();
+    String pluginymlWebsite = pluginyml.getWebsite();
 }

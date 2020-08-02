@@ -1,4 +1,4 @@
-package andreiwasfound.godmode;
+package andreiwasfound.godmode.utilities;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
