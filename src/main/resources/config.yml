@@ -1,0 +1,58 @@
+# GodMode configuration
+#
+# Do not change config-version manually.
+# It is used internally to migrate older GodMode configurations.
+
+config-version: 1
+
+messages:
+  # Messages shown when God mode is enabled or disabled.
+  # Legacy Minecraft color codes using '&' are supported.
+  god-enabled: "&aYou are now in God mode!"
+  god-disabled: "&cYou are no longer in God mode!"
+
+  god-already-enabled: "&eYou are already in God mode."
+  god-already-disabled: "&eYou are not in God mode."
+
+  god-enabled-other: "&aGod mode enabled for &e%player%&a."
+  god-disabled-other: "&cGod mode disabled for &e%player%&c."
+
+  god-already-enabled-other: "&e%player% is already in God mode."
+  god-already-disabled-other: "&e%player% is not in God mode."
+
+  player-not-found: "&cPlayer &e%player% &cis not online."
+
+  no-permission: "&cYou don't have permission to use this command."
+  player-only: "&cThis command can only be used by players."
+
+  config-reloaded: "&aGodMode configuration reloaded."
+
+  god-help-header: "&6&lGodMode Usage"
+  godmode-help-header: "&6&lGodMode Commands"
+
+  godmode-list-empty: "&eNo players are currently in God mode."
+  godmode-list-header: "&6&lPlayers in God mode: &e%count%"
+  godmode-list-entry-online: "&8 • &a%player% &7(online)"
+  godmode-list-entry-offline: "&8 • &7%player% &8(offline)"
+
+  update-available: "&eA new GodMode version is available: &6%version%"
+  update-download: "&a&l[Download]"
+  update-download-hover: "&7Click to open the GodMode download page"
+
+update-checker:
+  # Checks the Spigot resource page for new GodMode versions.
+  enabled: true
+
+  # Notify players with the godmode.updates permission when an update is available.
+  notify-admins: true
+
+persistence:
+  # Keep God mode enabled for players after server restarts.
+  enabled: false
+
+god-mode:
+  # Restore a player's health when God mode is enabled.
+  heal-on-enable: false
+
+  # Restore hunger and saturation when God mode is enabled.
+  feed-on-enable: false

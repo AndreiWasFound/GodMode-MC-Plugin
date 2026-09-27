@@ -1,0 +1,44 @@
+name: GodMode
+description: $description
+version: '${version}'
+main: io.github.andreiwasfound.godmode.GodMode
+load: POSTWORLD
+
+authors:
+  - AndreiWasFound
+
+website: https://www.spigotmc.org/resources/godmode.81882/
+
+commands:
+  god:
+    description: Toggle or set God mode for yourself or another player
+    usage: /god
+
+  godmode:
+    description: GodMode administration command
+    usage: /godmode
+
+permissions:
+  godmode.use:
+    description: Allows the player to toggle or set their own God mode
+    default: op
+
+  godmode.others:
+    description: Allows toggling or setting God mode for other players
+    default: op
+
+  godmode.reload:
+    description: Allows reloading the GodMode configuration
+    default: op
+
+  godmode.updates:
+    description: Allows receiving GodMode update notifications
+    default: op
+
+  godmode.info:
+    description: Allows viewing GodMode plugin information
+    default: op
+
+  godmode.list:
+    description: Allows viewing players currently in God mode
+    default: op
